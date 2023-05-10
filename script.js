@@ -13,6 +13,7 @@ function playGame() {
   opt4.style.display = "none";
 
   letsPlay.addEventListener("click", function () {
+    question.style.display = "block";
     message.innerHTML = "Choose Answer";
 
     let randomNum = Math.floor(Math.random() * 4);
@@ -27,7 +28,7 @@ function playGame() {
       secondOperand = temp;
 
       let questionOption = ["sum", "difference", "product", "quotient"];
-      let questionToAsk = `What is the of ${questionOption[randomNum]} of ${firstOperand} and ${secondOperand} `;
+      let questionToAsk = `What is the ${questionOption[randomNum]} of ${firstOperand} and ${secondOperand} `;
       question.innerText = questionToAsk;
       let correctAns;
       if (question.innerText.includes("sum")) {
@@ -86,7 +87,6 @@ function playGame() {
     }
 
     letsPlay.innerHTML = "Next";
-    question.style.display = "block";
   });
 }
 
