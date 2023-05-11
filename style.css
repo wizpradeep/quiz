@@ -14,11 +14,32 @@
 }
 .header {
   padding: 10px;
-  background-color: darkgray;
+  animation: colorRainbow infinite 3s ease-in-out;
+  color: white;
 }
 .header h1 {
   width: fit-content;
   margin: auto;
+}
+@keyframes colorRainbow {
+  0% {
+    background-color: red;
+  }
+  20% {
+    background-color: blue;
+  }
+  40% {
+    background-color: green;
+  }
+  60% {
+    background-color: rgba(134, 134, 51, 0.612);
+  }
+  80% {
+    background-color: orange;
+  }
+  100% {
+    background-color: gray;
+  }
 }
 #message {
   text-align: center;
@@ -49,25 +70,27 @@
   margin: auto;
 }
 .answers {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 200px;
   margin: 30px auto;
 }
 .firstRow,
 .secondRow {
+  width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 20px;
 }
 .ans {
+  text-align: center;
   padding: 20px;
 }
 .ans:hover {
   text-decoration: underline;
   cursor: pointer;
-  color: green;
 }
 .buttons {
   background-color: red;
@@ -87,4 +110,23 @@
   padding: 10px;
   border-radius: 40px;
   text-align: center;
+}
+@media (max-width: 500px) {
+  .header h1 {
+    font-size: 27px;
+  }
+  .question {
+    font-size: 15px;
+  }
+  #message {
+    font-size: 12px;
+  }
+  .answers {
+    gap: 30px;
+    font-size: 14px;
+  }
+  .ans {
+    width: 150px;
+    overflow: hidden;
+  }
 }

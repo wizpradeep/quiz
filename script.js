@@ -1,95 +1,112 @@
+const question = document.getElementById("question");
+const message = document.getElementById("message");
+const opt1 = document.getElementById("opt1");
+const opt2 = document.getElementById("opt2");
+const opt3 = document.getElementById("opt3");
+const opt4 = document.getElementById("opt4");
+const letsPlay = document.getElementById("letsPlay");
+
+//
+opt1.style.display = "none";
+opt2.style.display = "none";
+opt3.style.display = "none";
+opt4.style.display = "none";
+
+//
 function playGame() {
-  const question = document.getElementById("question");
-  const message = document.getElementById("message");
-  const opt1 = document.getElementById("opt1");
-  const opt2 = document.getElementById("opt2");
-  const opt3 = document.getElementById("opt3");
-  const opt4 = document.getElementById("opt4");
-  const letsPlay = document.getElementById("letsPlay");
+  letsPlay.style.pointerEvents = "none";
+  //
+  opt1.style.display = "block";
+  opt2.style.display = "block";
+  opt3.style.display = "block";
+  opt4.style.display = "block";
 
-  opt1.style.display = "none";
-  opt2.style.display = "none";
-  opt3.style.display = "none";
-  opt4.style.display = "none";
+  //
+  let randomNum = Math.floor(Math.random() * 4);
+  let firstOperand = Math.floor(Math.random() * 9000) + 1000;
+  let secondOperand = Math.floor(Math.random() * 9000) + 1000;
 
-  letsPlay.addEventListener("click", function () {
-    question.style.display = "block";
-    message.innerHTML = "Choose Answer";
+  //
+  let temp;
+  if (secondOperand > firstOperand) {
+    temp = firstOperand;
+    firstOperand = secondOperand;
+    secondOperand = temp;
+  }
 
-    let randomNum = Math.floor(Math.random() * 4);
-    let firstOperand = Math.floor(Math.random() * 9000) + 1000;
-    let secondOperand = Math.floor(Math.random() * 9000) + 1000;
+  const questionOptions = ["sum", "difference", "product", "quotient"];
+  const questionTOAsk = `What is ${questionOptions[randomNum]} of ${firstOperand} and ${secondOperand}. `;
+  question.innerHTML = questionTOAsk;
+  message.innerHTML = "Choose correct answer..";
 
-    // 2    5
+  //
+  let correctAnswer;
+  if (randomNum == 0) {
+    correctAnswer = firstOperand + secondOperand;
+  } else if (randomNum == 1) {
+    correctAnswer = firstOperand - secondOperand;
+  } else if (randomNum == 2) {
+    correctAnswer = firstOperand * secondOperand;
+  } else {
+    correctAnswer = firstOperand / secondOperand;
+  }
+  // correctAnswer = parseInt(correctAnswer.toFixed(2));
 
-    if (secondOperand > firstOperand) {
-      let temp = firstOperand;
-      firstOperand = secondOperand;
-      secondOperand = temp;
+  //
+  const answerOption = [opt1, opt2, opt3, opt4];
 
-      let questionOption = ["sum", "difference", "product", "quotient"];
-      let questionToAsk = `What is the ${questionOption[randomNum]} of ${firstOperand} and ${secondOperand} `;
-      question.innerText = questionToAsk;
-      let correctAns;
-      if (question.innerText.includes("sum")) {
-        correctAns = firstOperand + secondOperand;
-      } else if (question.innerText.includes("difference")) {
-        correctAns = firstOperand - secondOperand;
-      } else if (question.innerText.includes("product")) {
-        correctAns = firstOperand * secondOperand;
-      } else if (question.innerText.includes("quotient")) {
-        correctAns = firstOperand / secondOperand;
+  answerOption[randomNum].innerHTML = correctAnswer;
+
+  if (randomNum == 0) {
+    opt2.innerHTML = correctAnswer + 3;
+    opt3.innerHTML = correctAnswer - 3;
+    opt4.innerHTML = correctAnswer + 7;
+  } else if (randomNum == 1) {
+    opt1.innerHTML = correctAnswer + 3;
+    opt3.innerHTML = correctAnswer - 3;
+    opt4.innerHTML = correctAnswer + 7;
+  } else if (randomNum == 2) {
+    opt1.innerHTML = correctAnswer + 3;
+    opt2.innerHTML = correctAnswer - 3;
+    opt4.innerHTML = correctAnswer + 7;
+  } else {
+    opt1.innerHTML = correctAnswer + 3;
+    opt2.innerHTML = correctAnswer - 3;
+    opt3.innerHTML = correctAnswer + 7;
+  }
+
+  //
+  answerOption.forEach((element) => {
+    element.addEventListener("click", function () {
+      if (element.innerHTML == correctAnswer) {
+        question.innerHTML = "Awesome.... ";
+        message.innerHTML = "go for next";
+
+        //
+        opt1.style.display = "none";
+        opt2.style.display = "none";
+        opt3.style.display = "none";
+        opt4.style.display = "none";
+        letsPlay.style.pointerEvents = "auto";
+      } else {
+        message.innerHTML = `Opps....wrong answer. Better luck next time.</br> </br>
+        The right answer is ${correctAnswer} 
+        `;
+        letsPlay.style.pointerEvents = "auto";
+
+        //
+        opt1.style.display = "none";
+        opt2.style.display = "none";
+        opt3.style.display = "none";
+        opt4.style.display = "none";
       }
-      correctAns = parseInt(correctAns.toFixed(2));
-      opt1.style.display = "block";
-      opt2.style.display = "block";
-      opt3.style.display = "block";
-      opt4.style.display = "block";
-
-      optArray = [opt1, opt2, opt3, opt4];
-
-      optArray[randomNum].innerHTML = correctAns;
-
-      const userAns = document.querySelectorAll(".ans");
-
-      if (randomNum == 0) {
-        opt2.innerHTML = correctAns - 5;
-        opt3.innerHTML = correctAns + 78;
-        opt4.innerHTML = correctAns - 36;
-      } else if (randomNum == 1) {
-        opt1.innerHTML = correctAns - 5;
-        opt3.innerHTML = correctAns + 78;
-        opt4.innerHTML = correctAns - 36;
-      } else if (randomNum == 2) {
-        opt2.innerHTML = correctAns - 5;
-        opt1.innerHTML = correctAns + 78;
-        opt4.innerHTML = correctAns - 36;
-      } else if (randomNum == 3) {
-        opt1.innerHTML = correctAns - 3;
-        opt2.innerHTML = correctAns - 2;
-        opt3.innerHTML = correctAns + 2;
-      }
-      userAns.forEach((element) => {
-        element.addEventListener("click", function () {
-          if (element.innerHTML.includes(correctAns)) {
-            message.innerHTML = "Awesome.. </br>Click Next for Next Question";
-            letsPlay.style.display = "block";
-            question.style.display = "none";
-            opt1.style.display = "none";
-            opt2.style.display = "none";
-            opt3.style.display = "none";
-            opt4.style.display = "none";
-          } else {
-            message.innerHTML = "Opps..";
-          }
-        });
-      });
-    }
-
-    letsPlay.innerHTML = "Next";
+    });
   });
+
+  //
 }
 
+//
 letsPlay.addEventListener("click", function () {
   playGame();
 });
